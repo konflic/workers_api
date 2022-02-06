@@ -13,9 +13,8 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - db
-      - adminer
     ports:
-      - "8080:8080"
+      - "${APP_PORT}:${APP_PORT}"
 
   db:
     image: postgres:10
@@ -25,4 +24,4 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_HOST_AUTH_METHOD: password
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"

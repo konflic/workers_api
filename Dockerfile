@@ -8,7 +8,7 @@ RUN apt-get update
 RUN pip install -U pip
 RUN pip install -r requirements.txt
 
-EXPOSE 8888
+EXPOSE ${APP_PORT}
 
 COPY . .
 

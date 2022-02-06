@@ -43,3 +43,12 @@ def test_worker_update(session, create_worker):
     response = session.get(f"/workers/{create_worker}")
     assert response.status_code == 200, response.text
     assert str(response.json()["name"]) == new_name
+
+
+def test_worker_update_negative(session, create_worker):
+    new_name = "New Updated"
+    response = session.patch(
+        f"/workers/update", json={"worker_id": -1, "name": new_name}
+    )
+    assert response.status_code == 400
+    assert response.json().get("error") == "worker_id is required as numeric value"
