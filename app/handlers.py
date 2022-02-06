@@ -17,6 +17,17 @@ async def workers(request):
         return web.json_response(questions)
 
 
+async def worker_by_id(request):
+    worker_id = request.match_info.get("worker_id", -1)
+
+    async with request.app["db"].acquire() as conn:
+        cursor = await conn.execute(database.workers.select().where(database.workers.c.id == worker_id))
+        record = await cursor.fetchone()
+        if record is None:
+            return web.json_response({"error": "record not found"}, status=404)
+        return web.json_response(dict(record))
+
+
 async def add_worker(request):
     if request.method == "POST" and request.can_read_body:
         data = await request.json()
