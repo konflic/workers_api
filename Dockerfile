@@ -1,16 +1,14 @@
 FROM python:3.8-slim
 
-WORKDIR /app
+WORKDIR /application
 
 COPY requirements.txt .
 
+RUN apt-get update
 RUN pip install -U pip
 RUN pip install -r requirements.txt
 
-COPY init_db.py .
-RUN python init_db.py
-
-EXPOSE 8080
+EXPOSE 8888
 
 COPY . .
 
