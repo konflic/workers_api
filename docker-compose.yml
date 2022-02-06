@@ -5,8 +5,8 @@ services:
   api:
     restart: always
     environment:
-      DB_USER: admin
-      DB_PASSWORD: admin123
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
       DB_HOST: db
     build:
       context: .
@@ -15,20 +15,14 @@ services:
       - db
       - adminer
     ports:
-      - "8080:8888"
+      - "8080:8080"
+
   db:
-    image: postgres
+    image: postgres:10
     restart: always
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin123
-      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_HOST_AUTH_METHOD: password
     ports:
       - "5432:5432"
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - "8888:8080"
-

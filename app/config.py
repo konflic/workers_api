@@ -7,5 +7,9 @@ config = {
         "password": os.getenv("DB_PASSWORD", "password"),
         "host": os.getenv("DB_HOST", "localhost"),
         "port": os.getenv("DB_PORT", 5432),
-    }
+    },
+    "app": {
+        "host": os.getenv("APP_HOST", "localhost"),
+        "port": os.getenv("APP_PORT", 8080),
+    },
 }
