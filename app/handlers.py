@@ -38,8 +38,10 @@ async def add_worker(request):
             return web.json_response(error, status=400)
 
         async with request.app["db"].acquire() as conn:
-            await conn.execute(database.workers.insert().values(**worker.dict()))
-            return web.json_response(worker.json())
+            cursor = await conn.execute(database.workers.insert().values(**worker.dict()))
+            result = await cursor.fetchone()
+            if result:
+                return web.json_response({"success": True, "worker_id": str(result[0])})
 
     return web.Response(status=400)
 
