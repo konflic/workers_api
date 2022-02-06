@@ -21,7 +21,9 @@ async def worker_by_id(request):
     worker_id = request.match_info.get("worker_id", -1)
 
     async with request.app["db"].acquire() as conn:
-        cursor = await conn.execute(database.workers.select().where(database.workers.c.id == worker_id))
+        cursor = await conn.execute(
+            database.workers.select().where(database.workers.c.id == worker_id)
+        )
         record = await cursor.fetchone()
         if record is None:
             return web.json_response({"error": "record not found"}, status=404)
@@ -38,7 +40,9 @@ async def add_worker(request):
             return web.json_response(error, status=400)
 
         async with request.app["db"].acquire() as conn:
-            cursor = await conn.execute(database.workers.insert().values(**worker.dict()))
+            cursor = await conn.execute(
+                database.workers.insert().values(**worker.dict())
+            )
             result = await cursor.fetchone()
             if result:
                 return web.json_response({"success": True, "worker_id": str(result[0])})
@@ -53,7 +57,9 @@ async def update_worker(request):
             worker_id = data.get("worker_id")
 
             if not worker_id or not str(worker_id).isnumeric():
-                return web.json_response({"error": "worker_id is required as numeric value"}, status=400)
+                return web.json_response(
+                    {"error": "worker_id is required as numeric value"}, status=400
+                )
 
             del data["worker_id"]
 
@@ -66,10 +72,14 @@ async def update_worker(request):
                 return web.json_response(error, status=400)
 
             await conn.execute(
-                database.workers.update().where(database.workers.c.id == worker_id).values(
-                    **worker.dict(exclude_none=True))
+                database.workers.update()
+                .where(database.workers.c.id == worker_id)
+                .values(**worker.dict(exclude_none=True))
             )
-            return web.json_response({"success": True, "worker_data": worker.dict(exclude_none=True)}, status=200)
+            return web.json_response(
+                {"success": True, "worker_data": worker.dict(exclude_none=True)},
+                status=200,
+            )
 
     return web.Response(status=400)
 
@@ -81,9 +91,15 @@ async def delete_worker(request):
             worker_id = data.get("worker_id")
 
             if not worker_id or not str(worker_id).isnumeric():
-                return web.json_response({"error": "worker_id is required as numeric value"}, status=400)
+                return web.json_response(
+                    {"error": "worker_id is required as numeric value"}, status=400
+                )
 
-            await conn.execute(database.workers.delete().where(database.workers.c.id == worker_id))
-            return web.json_response({"success": True, "worker_id": worker_id}, status=200)
+            await conn.execute(
+                database.workers.delete().where(database.workers.c.id == worker_id)
+            )
+            return web.json_response(
+                {"success": True, "worker_id": worker_id}, status=200
+            )
 
     return web.Response(status=400)
