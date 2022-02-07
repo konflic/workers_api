@@ -39,13 +39,13 @@ pip install -r requiremetns.txt
 
 After this make sure you use only venv environment.
 
-2. Setup container with database using python script
+1. Setup container with database using python script
 
 ```
 python tests/setup_pg_container.py
 ```
 
-3Run application
+2. Run application
 
 ```
 python main.py
