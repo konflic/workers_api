@@ -8,7 +8,6 @@ from src.application import Application
 
 def create_app(debug=False):
     app = Application(debug=debug)
-    app.config = config
     setup_routes(app)
     setup_db(app.config)
     app.cleanup_ctx.append(pg_context)
