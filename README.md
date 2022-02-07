@@ -11,7 +11,7 @@ Application is made for managing workers.
 ## Setup with docker-compose
 
 Application can be started with docker-compose. 
-Before launching adjust environment variables in .env file according to your needs.
+Before launching adjust environment variables in ```.env.example``` file according to your needs and rename it to ```.env```.
 Below command will launch application according to current configuration in detached mode.
 
 ```
