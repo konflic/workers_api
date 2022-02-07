@@ -42,7 +42,7 @@ After this make sure you use only venv environment.
 2. Setup container with database using python script
 
 ```
-tests/setup_db.py
+python tests/setup_pg_container.py
 ```
 
 3Run application

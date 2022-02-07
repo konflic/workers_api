@@ -6,8 +6,11 @@ client = docker.from_env()
 container = client.containers.run(
     "postgres",
     detach=True,
-    ports={"5432/tcp": ("0.0.0.0", 5432)},
-    environment=[f"POSTGRES_PASSWORD={config['postgres']['password']}"],
+    ports={"5432/tcp": ("127.0.0.1", 5432)},
+    environment=[
+        f"POSTGRES_USER={config['postgres']['user']}",
+        f"POSTGRES_PASSWORD={config['postgres']['password']}",
+        "POSTGRES_HOST_AUTH_METHOD=trust"],
     name="postgres_for_test",
 )
 

@@ -3,13 +3,14 @@ from aiohttp import web
 from app.routes import setup_routes
 from app.config import config
 from app.database import pg_context, setup_db
+from src.application import Application
 
 
-def create_app():
-    app = web.Application(debug=True)
-    app["config"] = config
+def create_app(debug=False):
+    app = Application(debug=debug)
+    app.config = config
     setup_routes(app)
-    setup_db(app["config"])
+    setup_db(app.config)
     app.cleanup_ctx.append(pg_context)
     return app
 

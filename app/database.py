@@ -3,6 +3,7 @@ import aiopg.sa
 from sqlalchemy import Table, Column, Integer, String
 from sqlalchemy import MetaData, create_engine
 from sqlalchemy_utils import create_database, database_exists
+from src.application import Application
 
 meta = MetaData()
 
@@ -36,8 +37,8 @@ def setup_db(config):
     print("DB and Tables setup and created!")
 
 
-async def pg_context(app):
-    conf = app["config"]["postgres"]
+async def pg_context(app: Application):
+    conf = app.config["postgres"]
 
     engine = await aiopg.sa.create_engine(
         database=conf["database"],
@@ -47,9 +48,9 @@ async def pg_context(app):
         port=conf["port"],
     )
 
-    app["db"] = engine
+    app.db = engine
 
     yield
 
-    app["db"].close()
-    await app["db"].wait_closed()
+    app.db.close()
+    await app.db.wait_closed()

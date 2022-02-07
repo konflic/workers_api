@@ -1,7 +1,8 @@
 from app import handlers
+from src.application import Application
 
 
-def setup_routes(app):
+def setup_routes(app: Application):
     app.router.add_get("/", handlers.index)
     app.router.add_get("/workers", handlers.workers)
     app.router.add_get("/workers/{worker_id}", handlers.worker_by_id)

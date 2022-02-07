@@ -10,7 +10,7 @@ async def index(request):
 
 
 async def workers(request):
-    async with request.app["db"].acquire() as conn:
+    async with request.app.db.acquire() as conn:
         cursor = await conn.execute(database.workers.select())
         records = await cursor.fetchall()
         questions = [dict(q) for q in records]
@@ -20,7 +20,7 @@ async def workers(request):
 async def worker_by_id(request):
     worker_id = request.match_info.get("worker_id", -1)
 
-    async with request.app["db"].acquire() as conn:
+    async with request.app.db.acquire() as conn:
         cursor = await conn.execute(
             database.workers.select().where(database.workers.c.id == worker_id)
         )
@@ -39,7 +39,7 @@ async def add_worker(request):
         except ValidationError as error:
             return web.json_response(error, status=400)
 
-        async with request.app["db"].acquire() as conn:
+        async with request.app.db.acquire() as conn:
             cursor = await conn.execute(
                 database.workers.insert().values(**worker.dict())
             )
@@ -52,7 +52,7 @@ async def add_worker(request):
 
 async def update_worker(request):
     if request.method == "PATCH" and request.can_read_body:
-        async with request.app["db"].acquire() as conn:
+        async with request.app.db.acquire() as conn:
             data = await request.json()
             worker_id = data.get("worker_id")
 
@@ -86,7 +86,7 @@ async def update_worker(request):
 
 async def delete_worker(request):
     if request.method == "DELETE" and request.can_read_body:
-        async with request.app["db"].acquire() as conn:
+        async with request.app.db.acquire() as conn:
             data = await request.json()
             worker_id = data.get("worker_id")
 
