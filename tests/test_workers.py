@@ -1,5 +1,5 @@
 import random
-from api.models import grades, Gender, Department
+from app.models import grades, Gender, Department
 
 
 def test_workers(session):

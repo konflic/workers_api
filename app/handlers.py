@@ -1,6 +1,6 @@
 from app import database
 from aiohttp import web
-from api.models import Worker, UpdateWorker
+from app.models import Worker, UpdateWorker
 
 from pydantic.error_wrappers import ValidationError
 

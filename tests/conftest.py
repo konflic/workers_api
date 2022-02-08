@@ -1,14 +1,9 @@
-import time
-
 import pytest
 import requests
 import random
 
-import docker
-from api.models import grades, Gender, Department
+from app.models import grades, Gender, Department
 from urllib.parse import urljoin
-from aiohttp import web
-from main import create_app
 
 from app.config import config
 
