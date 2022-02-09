@@ -5,7 +5,7 @@ import random
 from app.models import grades, Gender, Department
 from urllib.parse import urljoin
 
-from app.config import config
+from src.config import config
 
 
 def pytest_addoption(parser):

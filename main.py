@@ -1,7 +1,7 @@
 from aiohttp import web
 
 from app.routes import setup_routes
-from app.config import config
+from src.config import config
 from app.database import pg_context, setup_db
 from src.application import Application
 

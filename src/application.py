@@ -1,6 +1,6 @@
 from aiohttp import web
 from aiopg.sa import Engine
-from app.config import config
+from src.config import config
 
 
 class Application(web.Application):

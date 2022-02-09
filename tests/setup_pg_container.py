@@ -1,5 +1,5 @@
 import docker
-from app.config import config
+from src.config import config
 
 client = docker.from_env()
 
